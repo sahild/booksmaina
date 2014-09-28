@@ -1,0 +1,1 @@
+Figaro.require_keys('stripe_api_key')

@@ -9,8 +9,8 @@ default: &default
   host: localhost
   encoding: unicode
   database: books_development
-  username: "sahild"
-  password: "amrata"
+  username: <%=  ENV["db_dev_username"] %>
+  password: <%=  ENV["db_dev_password"] %>
 
 development:
   <<: *default

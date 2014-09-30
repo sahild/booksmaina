@@ -1,0 +1,21 @@
+%html
+  %body
+    %h1
+      So many books to choose from..
+    %table
+      %tr
+        %th Cover
+        %th Title
+        %th Author
+        %th Publisher
+      - @books.each do |book|
+        %tr
+          %td
+            %img{:src => book.cover.url(:thumb)}/
+          %td
+            = book.title
+          %td
+            - if book.author != nil?
+              = book.author.title
+          %td
+            = book.publisher

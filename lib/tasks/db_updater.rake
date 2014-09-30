@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'json'
 require "open-uri"
+require "Curl"
 
 namespace :db_updater do
   desc "Populate db first time using google apis"

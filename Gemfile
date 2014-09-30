@@ -27,7 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'figaro'
 gem 'haml'
-gem 'curb', group: :development
+gem 'curb'
 gem "paperclip", "~> 4.2"
 gem "aws-sdk"
 ruby "2.1.3"

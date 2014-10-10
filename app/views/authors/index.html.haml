@@ -1,0 +1,18 @@
+%html
+  %body
+    %h1
+      So many authors to choose from..
+    %table.ui.table.segment.collapsing
+      %thead
+        %tr
+          %th Title
+      %tbody
+        - @authors.each do |author|
+          %tr
+            %td
+              = author.title
+            %td
+              - if author.books != nil?
+                = link_to "See books", "/browse_by_author/#{author.title.gsub(" ","-").gsub(".","_")}"
+  %div.ui
+    = will_paginate @authors, :semantic => true

@@ -1,0 +1,28 @@
+%link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css", :media => "all", :rel => "stylesheet", :type => "text/css"}/
+.ui.secondary.pointing.menu
+  = link_to root_path, class:"item" do
+    %i.home.icon
+    Home
+  = link_to about_path, class:"item" do
+    %i.mail.icon
+    About
+  - if user_signed_in?
+    %span.item
+      %i.user.icon
+      =current_user.name
+  .right.menu
+    .item
+      -# .ui.icon.input
+        -# %input{:placeholder => "Search...", :type => "text"}/
+        -# %i.search.link.icon
+      - if user_signed_in?
+        = link_to edit_user_registration_path, class:"ui item" do
+          %span.glyphicon.glyphicon-cog
+          Account Setting
+        = link_to destroy_user_session_path, class:"ui item", method: :delete do
+          %span.glyphicon.glyphicon-log-out
+          Log out
+      - else
+        = link_to new_user_session_path, class:"ui item" do
+          %span.glyphicon.glyphicon-user
+          Sign in

@@ -30,6 +30,15 @@ gem 'haml'
 gem 'curb'
 gem "paperclip", "~> 4.2"
 gem "aws-sdk"
+gem 'semantic-ui-sass', '~> 0.16.1.0'
+gem 'will_paginate', '~> 3.0'
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-google-oauth2'
+
 ruby "2.1.3"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

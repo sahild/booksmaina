@@ -76,7 +76,7 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-
+  config.action_mailer.default_url_options = { host: 'lit-brook-2774.herokuapp.com', port: 80 }
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   #paperclip

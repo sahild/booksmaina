@@ -30,11 +30,26 @@ class UsersController < ApplicationController
   def finish_signup
     # authorize! :update, @user 
     if request.patch? && params[:user] #&& params[:user][:email]
-      if @user.update(user_params)
-        sign_in(@user, :bypass => true)
-        redirect_to root_url, notice: 'Your profile was successfully updated.'
+      puts "email is "+user_params[:email]
+      user_by_email = User.find_by_email(user_params[:email])
+      if(user_by_email.nil?)
+        puts "In if"
+        if @user.update(user_params)
+          sign_in(@user, :bypass => true)
+          redirect_to root_url, notice: 'Your profile was successfully updated.'
+        else
+          @show_errors = true
+        end
       else
-        @show_errors = true
+        puts user_by_email
+        provider = @user.email[@user.email.rindex('-')+1..@user.email.rindex('.')-1]
+        puts provider
+        user_identity = @user.identities.find_by_provider(provider)
+        user_identity.user = user_by_email
+        user_identity.save
+        User.destroy(@user.id)
+        sign_in(user_by_email)
+        redirect_to root_url, notice: 'Welcome back '+ user_by_email.name
       end
     end
   end

@@ -38,6 +38,7 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
+gem 'activeadmin', github: 'gregbell/active_admin'
 
 ruby "2.1.3"
 # Use ActiveModel has_secure_password

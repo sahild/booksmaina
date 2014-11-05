@@ -14,7 +14,7 @@ class Book < ActiveRecord::Base
   validates :title, :price, :author_id, :language, presence: true
   validates_uniqueness_of :title, :scope => :author_id
   validates :price, numericality: { greater_than_or_equal_to: 0 } 
-  validates :rating, numericality: { greater_than: 0, less_than_or_equal_to: 5 }
+  validates :rating, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :genre, :inclusion  => { :in => [ "romance","suspense","biography","fantasy" ]}
   
 end

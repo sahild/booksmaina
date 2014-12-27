@@ -59,7 +59,44 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
+  def card_token
+    token = params[:stripeToken]
+    card_id = params[:stripeCardId]
+    current_user.add_card_to_customer(token, card_id)
+    failed = current_user.pay_by_card(card_id)
+    if failed == "failure"
+      redirect_to :card_details
+    else
+      redirect_to :root
+    end
+  end
+  
+  def choose_card
+    @cards = current_user.get_user_cards
+    unless @cards.present?
+      redirect_to :card_details
+    end
+  end
+  
+  def card_details
+    @cart = current_user.cart
+  end
+  
+  def do_payment
+    card_id = params[:card_id]
+    failed = current_user.pay_by_card(card_id)
+    if failed == "failure"
+      redirect_to :choose_card
+    else
+      redirect_to :root
+    end
+  end
+  
+  def subscriptions
+    @subscriptions = current_user.get_customer_subscriptions
+  end
+  
   private
     def set_user
       @user = User.find(params[:id])

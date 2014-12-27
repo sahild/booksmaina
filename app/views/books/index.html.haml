@@ -7,6 +7,7 @@
         %tr
           %th Cover
           %th Title
+          %th Price
           %th Author
           %th Publisher
       %tbody
@@ -17,9 +18,13 @@
             %td
               = book.title
             %td
+              = book.price
+            %td
               - if book.author != nil?
                 = book.author.title
             %td
               = book.publisher
+            %td
+              = link_to "View", book_path(book)
   %div.ui
     = will_paginate @books, :semantic => true

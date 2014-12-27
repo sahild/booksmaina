@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012104013) do
+ActiveRecord::Schema.define(version: 20141226061720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,13 +49,35 @@ ActiveRecord::Schema.define(version: 20141012104013) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "author_slugs", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "author_slugs", ["slug"], name: "index_author_slugs_on_slug", unique: true, using: :btree
+
   create_table "authors", force: true do |t|
     t.string   "title"
     t.string   "image"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
+
+  create_table "book_slugs", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "book_slugs", ["slug"], name: "index_book_slugs_on_slug", unique: true, using: :btree
 
   create_table "books", force: true do |t|
     t.string   "title"
@@ -73,7 +95,53 @@ ActiveRecord::Schema.define(version: 20141012104013) do
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
+    t.string   "slug"
   end
+
+  create_table "cards", force: true do |t|
+    t.integer  "user_id"
+    t.string   "fingerprint"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cart_items", force: true do |t|
+    t.integer  "cart_id"
+    t.string   "type"
+    t.float    "discount"
+    t.string   "promo_code"
+    t.float    "orig_price"
+    t.float    "discounted_price"
+    t.integer  "count"
+    t.integer  "book_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cart_items", ["book_id"], name: "index_cart_items_on_book_id", using: :btree
+  add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
+
+  create_table "carts", force: true do |t|
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
+
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "identities", force: true do |t|
     t.integer  "user_id"
@@ -84,6 +152,18 @@ ActiveRecord::Schema.define(version: 20141012104013) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "payments", force: true do |t|
+    t.integer  "amount"
+    t.integer  "card_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.boolean  "status"
+  end
+
+  add_index "payments", ["card_id"], name: "index_payments_on_card_id", using: :btree
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -99,6 +179,10 @@ ActiveRecord::Schema.define(version: 20141012104013) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "stripe_customer_id"
+    t.string   "subscription_id"
+    t.string   "fbOAuthToken"
+    t.string   "fbAppScopedLink"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

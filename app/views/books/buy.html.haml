@@ -1,0 +1,12 @@
+%html
+  %body
+    %h1
+      You are buying the book
+
+
+
+
+
+%form{:action => "", :method => "POST"}
+  %script.stripe-button{"data-amount" => "2000", "data-description" => "2 widgets ($20.00)", "data-image" => "/128x128.png", "data-key" => "pk_test_6pRNASCoBOKtIshFeQd4XMUh", "data-name" => "Demo Site", :src => "https://checkout.stripe.com/checkout.js"}
+    :cdata

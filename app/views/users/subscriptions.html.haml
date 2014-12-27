@@ -1,0 +1,19 @@
+%html
+  %body
+    %h1
+      Your subscriptions
+    %table.ui.table.segment.collapsing
+      %thead
+        %tr
+          %th Title
+          %th Price
+          %th Started on
+      %tbody
+        - @subscriptions.each do |subscription|
+          %tr
+            %td
+              = subscription.plan.name
+            %td
+              = subscription.plan.amount
+            %td
+              = Time.at(subscription.plan.created)

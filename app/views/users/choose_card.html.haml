@@ -1,0 +1,12 @@
+
+%form#payment-form{:action => "/do_payment", :method => "POST"}
+  %select#card_id{:name => "card_id"}
+    -@cards.each do |carddet|
+      
+      %option{:value => "#{carddet.id}"} 
+        = carddet.last4
+  %input{:type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token}/
+  %button{:type => "submit"} Pay
+    
+
+= link_to("New card", card_details_path)

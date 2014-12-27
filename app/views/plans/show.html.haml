@@ -1,0 +1,14 @@
+%html
+  %body
+    %center
+      %h1
+        = @plan.id
+      %h2
+        = @plan.name
+      %h2
+        = "Cost: " + @plan.amount.to_s + " " + @plan.currency
+      %h2
+        = "Interval: 1 " + @plan.interval
+      %h2
+        = "Trial period: " + @plan.trial_period_days.to_s + " days"
+      = link_to "Subscribe", subscribe_plan_path(@plan.id), :method=>"POST"

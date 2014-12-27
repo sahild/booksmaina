@@ -1,0 +1,33 @@
+%html
+  %body
+    %h3
+      Your recent payments..
+    %table.ui.table.segment.collapsing
+      %thead
+        %tr
+          %th Id
+          %th Amount
+          %th Currency
+          %th Card
+          %th Refunded
+          %th Description
+          %th Created on
+      %tbody
+        - @payments.each do |payment|
+          %tr
+            %td
+              = payment.id
+            %td
+              = payment.amount
+            %td
+              = payment.currency
+            %td
+              = "xxxxxxxxxxxx" + payment.card.last4
+            %td
+              = payment.refunded
+            %td
+              = payment.description
+            %td
+              = Time.at(payment.created)
+    - if (@payments.present?)
+      = link_to("Next", payments_url({:after=>@payments.last.id}))

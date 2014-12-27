@@ -1,0 +1,22 @@
+%html
+  %body
+    %center
+      %h1
+        My cart
+        
+    - if @cart.cart_items.present?
+      - @cart.cart_items.each do |cart_item|
+        - book = cart_item.book
+        %img{:src => book.cover.url(:thumb)}
+        %h1
+          = book.title
+        %h3
+          = book.price
+    - else
+      %h1 Cart is empty
+          
+
+    %h2
+      = "Total: Rs." + @cart.amount.to_s
+      - if @cart.amount > 0
+        = link_to "Pay now", choose_card_path

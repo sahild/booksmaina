@@ -3,18 +3,36 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
-  resources :books
+  resources :books do
+    member do
+      post :add_to_cart
+    end
+  end
   resources :authors do
     member do
       get :books
     end
   end
-  
+  resources :users
+  resources :payments
+  resources :plans do
+    member do
+      post :subscribe
+    end
+  end
   root "books#index"
   get "about" => "pages#about"
+  get "privacy_policy" => "pages#privacy_policy"
   #{|path_params, req| "/authors/#{path_params[:author_name]}" }
   get '/browse_by_author/:author_name' => "authors#findByName"
   get '/browse_by_author', to: redirect('/authors')
+  get '/cart' => "carts#show"
+  get '/card_details' => "users#card_details"
+  post '/card_token' => "users#card_token"
+  post '/do_payment' => "users#do_payment"
+  get '/choose_card' => "users#choose_card"
+  get '/subscriptions' => "users#subscriptions"
+  get '/facebook/test' => "facebook#index"
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

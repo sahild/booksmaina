@@ -16,6 +16,20 @@
         -# %input{:placeholder => "Search...", :type => "text"}/
         -# %i.search.link.icon
       - if user_signed_in?
+        = link_to cart_path(current_user.cart), class:"ui item" do
+          %span.icon.shop
+            My Cart
+        = link_to payments_path, class:"ui item" do
+          %span.icon.shop
+            My payments
+        - if current_user.subscription_id.blank?
+          = link_to plans_path, class:"ui item" do
+            %span.icon.shop
+              Plans
+        - unless current_user.subscription_id.blank?
+          = link_to subscriptions_path, class:"ui item" do
+            %span.icon.shop
+              My subscriptions        
         = link_to edit_user_registration_path, class:"ui item" do
           %span.glyphicon.glyphicon-cog
           Account Setting

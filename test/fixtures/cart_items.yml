@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cart_id: 
+  type: 
+  discount: 1.5
+  promo_code: MyString
+  orig_price: 1.5
+  discounted_price: 1.5
+  count: 1
+  book_id: 
+
+two:
+  cart_id: 
+  type: 
+  discount: 1.5
+  promo_code: MyString
+  orig_price: 1.5
+  discounted_price: 1.5
+  count: 1
+  book_id: 
